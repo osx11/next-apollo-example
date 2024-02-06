@@ -6,7 +6,8 @@ import {BookEntity} from '@/app/data/entities/book.entity';
 import {Book} from '@/app/books/components/Book';
 import {useEffect} from 'react';
 import {ReviewEntity} from '@/app/data/entities/review.entity';
-import {useSession} from 'next-auth/react';
+import {signOut, useSession} from 'next-auth/react';
+import Link from 'next/link';
 
 const BOOKS_QUERY = gql `
   query {
@@ -80,7 +81,13 @@ export const BooksList = () => {
   return (
     <Layout>
       {session.status === 'authenticated' &&
-        <p style={{color: 'green'}}>Authenticated! ({session.data.user.name})</p>
+        <div style={{display: 'flex', gap: 10}}>
+          <p style={{color: 'green'}}>Authenticated! ({session.data.user.name})</p>
+          <button onClick={() => signOut()}>Log out</button>
+          <button>
+            <Link href={'/'}>Go to main</Link>
+          </button>
+        </div>
       }
 
       <BooksLayout>

@@ -18,8 +18,6 @@ const handler = NextAuth({
   callbacks: {
     jwt: (params) => {
       if (params.account && params.account.type !== 'credentials') {
-        console.debug('ACCOUNT', params.account);
-
         // this is used for external auth providers (e.g. Google).
         // we need to create a token HERE (as auth is done HERE) to pass to Nest server then.
         // Nest will just decode it when passed via `Authorization` header
