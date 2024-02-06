@@ -1,8 +1,10 @@
+'use client'
+
 import Image from 'next/image';
 import styles from './page.module.css';
-import {Session} from '@/app/components/Session';
 import {GlobalEventProvider} from '@/app/components/GlobalEventProvider';
 import {ErrorBoundaryExample} from '@/app/components/ErrorBoundaryExample';
+import {Session} from '@/app/components/Session';
 
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))

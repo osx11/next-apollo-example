@@ -1,19 +1,20 @@
-import {withAuth} from 'next-auth/middleware';
+// export default withAuth(
+//   {
+//     callbacks: {
+//       authorized: ({ req, token }) => {
+//         if (req.nextUrl.pathname === '/admin') {
+//           return token?.role === "admin"
+//         }
+//
+//         if (req.nextUrl.pathname === '/dashboard') {
+//           // console.debug('TOKEN DB', token);
+//           return token !== null;
+//         }
+//
+//         return true;
+//       },
+//     },
+//   }
+// )
 
-export default withAuth(
-  {
-    callbacks: {
-      authorized: ({ req, token }) => {
-        if (req.nextUrl.pathname === '/admin') {
-          return token?.role === "admin"
-        }
-
-        if (req.nextUrl.pathname === '/dashboard') {
-          return token !== null;
-        }
-
-        return true;
-      },
-    },
-  }
-)
+export default () => {}

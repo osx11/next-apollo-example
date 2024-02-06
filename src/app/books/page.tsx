@@ -4,17 +4,17 @@ import {ApolloProvider} from '@apollo/client';
 import apolloClient from '@/apollo-client';
 import {BooksList} from '@/app/books/components/BooksList';
 import {loadDevMessages, loadErrorMessages} from '@apollo/client/dev';
-import {SessionProvider} from 'next-auth/react';
+import {ProtectedView} from '@/app/components/ProtectedView';
 
 loadDevMessages();
 loadErrorMessages();
 
 export default function Books() {
   return (
-    <SessionProvider>
+    <ProtectedView>
       <ApolloProvider client={apolloClient}>
         <BooksList/>
       </ApolloProvider>
-    </SessionProvider>
+    </ProtectedView>
   )
 }

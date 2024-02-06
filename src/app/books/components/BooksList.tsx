@@ -40,7 +40,6 @@ const ADD_REVIEW_MUTATION = gql `
   }
 `;
 
-
 export const BooksList = () => {
   const session = useSession();
   const {data, subscribeToMore} = useQuery<{books: BookEntity[]}>(BOOKS_QUERY);
