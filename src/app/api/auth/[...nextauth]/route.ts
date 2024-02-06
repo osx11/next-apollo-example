@@ -15,15 +15,19 @@ const handler = NextAuth({
     strategy: 'jwt',
   },
   jwt: {},
+  pages: {
+    signIn: '/auth/signin'
+  },
   callbacks: {
     jwt: (params) => {
       if (params.account && params.account.type !== 'credentials') {
         // this is used for external auth providers (e.g. Google).
         // we need to create a token HERE (as auth is done HERE) to pass to Nest server then.
         // Nest will just decode it when passed via `Authorization` header
+
         const payload = {sub: params.token.sub, username: params.token.name};
-        params.token.accessToken = jwt.sign(payload, process.env.JWT_SECRET!, {algorithm: 'HS512', expiresIn: 300});
-        params.token.refreshToken = jwt.sign(payload, process.env.JWT_SECRET!, {algorithm: 'HS512', expiresIn: 60*60*24});
+        params.token.accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET!, {algorithm: 'HS512', expiresIn: 300});
+        params.token.refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET!, {algorithm: 'HS512', expiresIn: 60*60*24});
       }
 
       console.debug('jwt');

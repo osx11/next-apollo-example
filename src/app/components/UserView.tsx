@@ -15,7 +15,7 @@ export const UserView = () => {
   if (status === 'authenticated' && session?.user) {
     return (
       <div className={styles.container}>
-        <p style={{color: 'green'}}>{session.user.name} ({session.accessToken})</p>
+        <p style={{color: 'green'}}>{session.user.name}</p>
         <button className={styles.btn}  onClick={() => router.push('/api/auth/signout')}>Log out</button>
       </div>
     )

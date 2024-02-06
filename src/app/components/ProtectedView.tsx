@@ -2,9 +2,10 @@
 
 import {ReactNode, useEffect, useState} from 'react';
 import {SessionProvider, useSession} from 'next-auth/react';
-import {redirect} from 'next/navigation';
+import {useRouter} from 'next/navigation';
 
 const ProtectedViewPure = ({children}: {children: ReactNode}) => {
+  const router = useRouter()
   const {data, status, update} = useSession();
   const [isOk, setIsOk] = useState(false)
 
@@ -12,7 +13,7 @@ const ProtectedViewPure = ({children}: {children: ReactNode}) => {
     if (status === 'loading') return;
 
     if (status === 'unauthenticated' || !data) {
-      redirect('/api/auth/signin')
+      router.push('/api/auth/signin')
       return;
     }
 
@@ -31,8 +32,9 @@ const ProtectedViewPure = ({children}: {children: ReactNode}) => {
       })
 
       if (!r.ok) {
+        console.debug('FUCKING NO OK');
         clearTimeout(timeout)
-        redirect('/api/auth/signin')
+        router.push('/api/auth/signin')
       }
 
       const json = await r.json();

@@ -1,3 +1,5 @@
+'use client';
+
 import styled from 'styled-components';
 import {BookEntity} from '@/app/data/entities/book.entity';
 import {gql} from '@apollo/client';
