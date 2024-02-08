@@ -120,9 +120,9 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_SECRET!,
       authorization: {
         params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code"
+          // prompt: "consent",
+          // access_type: "offline",
+          // response_type: "code"
         }
       }
     })

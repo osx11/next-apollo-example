@@ -25,8 +25,6 @@ export default function SignIn() {
   const onSubmit = async (data: LoginFormFields) => {
     const r = await signIn('credentials', {redirect: false, callbackUrl: undefined, ...data})
 
-    console.debug('res', r);
-
     if (!r) return;
 
     if (r?.status === 401) {
@@ -38,24 +36,51 @@ export default function SignIn() {
     }
   }
 
+  const loginWithExternalProvider = async (provider: 'google') => {
+    const r = await signIn(provider)
+
+    if (!r) return
+
+    if (r.status === 401) alert('Error')
+    else if (r.url) {
+      const redirectTo = new URL(r.url).searchParams.get('callbackUrl')
+      router.push(redirectTo || '/')
+    }
+  }
+
   return (
     <Layout>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <InputWithError>
-          {errors.username && <Error>{errors.username.message}</Error>}
-          <Input $error={!!errors.username} placeholder={'Username'} {...register('username')}/>
-        </InputWithError>
+      <Container>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <InputWithError>
+            {errors.username && <Error>{errors.username.message}</Error>}
+            <Input $error={!!errors.username} placeholder={'Username'} {...register('username')}/>
+          </InputWithError>
 
-        <InputWithError>
-          {errors.password && <Error>{errors.password.message}</Error>}
-          <Input $error={!!errors.username} placeholder={'Password'} {...register('password')}/>
-        </InputWithError>
+          <InputWithError>
+            {errors.password && <Error>{errors.password.message}</Error>}
+            <Input $error={!!errors.username} placeholder={'Password'} {...register('password')}/>
+          </InputWithError>
 
-        <Button type={'submit'}>Sign in</Button>
-      </Form>
+          <Button type={'submit'}>Sign in</Button>
+        </Form>
+
+        <Line/>
+
+        <Button style={{background: 'rgba(75,149,232,0.78)'}} onClick={() => loginWithExternalProvider('google')}>
+          Sign in with Google
+        </Button>
+      </Container>
     </Layout>
   )
 }
+
+const Line = styled.div `
+  width: 100%;
+  height: 2px;
+  background: #cbcbcb;
+`;
+
 
 const Layout = styled.div `
   display: flex;
@@ -67,11 +92,21 @@ const Layout = styled.div `
   padding: 10px;
 `;
 
-const Form = styled.form `
+const containerStyles = css `
   width: 300px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+`;
+
+
+const Container = styled.div `
+  ${containerStyles};
+  gap: 20px;
+`;
+
+const Form = styled.form `
+  ${containerStyles};
 `;
 
 const InputWithError = styled.div `

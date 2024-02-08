@@ -1,20 +1,19 @@
-'use client';
-
-import {ApolloProvider} from '@apollo/client';
-import apolloClient from '@/apollo-client';
 import {BooksList} from '@/app/books/components/BooksList';
 import {loadDevMessages, loadErrorMessages} from '@apollo/client/dev';
-import {ProtectedView} from '@/app/components/ProtectedView';
+import {ClientWrapper} from '@/app/components/ClientWrapper';
+import {Metadata} from 'next';
 
 loadDevMessages();
 loadErrorMessages();
 
+export const metadata: Metadata = {
+  title: 'Books library'
+}
+
 export default function Books() {
   return (
-    <ProtectedView>
-      <ApolloProvider client={apolloClient}>
-        <BooksList/>
-      </ApolloProvider>
-    </ProtectedView>
+    <ClientWrapper>
+      <BooksList/>
+    </ClientWrapper>
   )
 }
